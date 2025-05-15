@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Payroll</title>
+    <style>
+        /* Reset CSS Sederhana */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex; /* Menggunakan flexbox untuk layout utama */
+            height: 100vh; /* Tinggi penuh viewport */
+            overflow: hidden; /* Mencegah scroll di body utama */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Navbar (Bagian Atas) */
+        .navbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px; /* Tinggi tetap navbar */
+            box-sizing: border-box;
+            width: 100%; /* Navbar mengambil lebar penuh dari parentnya (.main-content-wrapper) */
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .navbar .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .user-info span {
+            margin-right: 15px;
+        }
+
+        .navbar .user-info .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .navbar .user-info .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Sidebar (Aside - Bagian Samping) */
+        .sidebar {
+            width: 250px; /* Lebar sidebar */
+            background-color: #2c3e50; /* Warna gelap untuk sidebar */
+            color: #ecf0f1;
+            padding-top: 20px;
+            height: 100vh; /* Tinggi penuh viewport */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto; /* Scroll jika konten sidebar panjang */
+            box-sizing: border-box;
+        }
+
+        .sidebar .sidebar-header {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .sidebar ul li a {
+            display: flex; /* Menggunakan flex untuk ikon dan teks */
+            align-items: center;
+            padding: 15px 20px;
+            color: #ecf0f1;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .sidebar ul li a .icon {
+            margin-right: 10px; /* Jarak antara ikon dan teks */
+            width: 20px; /* Lebar untuk ikon */
+            text-align: center;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #3498db; /* Warna hover/aktif */
+            color: #ffffff;
+            padding-left: 25px; /* Efek indent saat hover/aktif */
+        }
+
+        /* Main Content Wrapper (Pembungkus Navbar dan Konten Utama) */
+        .main-content-wrapper {
+            flex-grow: 1; /* Mengambil sisa ruang */
+            display: flex;
+            flex-direction: column; /* Navbar di atas, konten di bawah */
+            height: 100vh; /* Tinggi penuh viewport */
+        }
+
+        /* Main Content Area (Tempat Konten Halaman Ditampilkan) */
+        .main-content {
+            flex-grow: 1; /* Mengambil sisa ruang vertikal */
+            padding: 30px;
+            background-color: #f4f7f6;
+            overflow-y: auto; /* Scroll jika konten utama panjang */
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            margin-bottom: 20px;
+        }
+
+        /* Placeholder untuk ikon (gunakan FontAwesome atau SVG) */
+        .icon-dashboard::before { content: "🏠"; }
+        .icon-users::before { content: "👥"; }
+        .icon-attendance::before { content: "📅"; }
+        .icon-payroll::before { content: "💰"; }
+        .icon-payslip::before { content: "📄"; }
+        .icon-history::before { content: "📜"; }
+        .icon-profile::before { content: "👤"; }
+        .icon-clock-in::before { content: "➡️"; }
+        .icon-clock-out::before { content: "⬅️"; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar (Pilih salah satu atau implementasikan logic untuk menampilkan berdasarkan peran) -->
+    <!-- Sidebar untuk Admin -->
+    <aside class="sidebar" id="adminSidebar" style=""> <!-- Awalnya disembunyikan, tampilkan dengan JS atau logic backend -->
+        <div class="sidebar-header">
+            <h3>Admin Menu</h3>
+        </div>
+        <ul>
+            <li><a href="#dashboard" class="active"><span class="icon icon-dashboard"></span> Dashboard</a></li>
+            <li><a href="#kelola-karyawan"><span class="icon icon-users"></span> Kelola Karyawan</a></li>
+            <li><a href="#rekap-absensi"><span class="icon icon-attendance"></span> Rekap Absensi</a></li>
+            <li><a href="#hitung-gaji"><span class="icon icon-payroll"></span> Hitung Gaji</a></li>
+            <li><a href="#cetak-slip"><span class="icon icon-payslip"></span> Cetak Slip Gaji</a></li>
+            <li><a href="#profil"><span class="icon icon-profile"></span> Profil Saya</a></li>
+        </ul>
+    </aside>
+
+    <!-- Sidebar untuk Karyawan -->
+    <aside class="sidebar" id="karyawanSidebar" style="display: none;"> <!-- Awalnya disembunyikan -->
+        <div class="sidebar-header">
+            <h3>Karyawan Menu</h3>
+        </div>
+        <ul>
+            <li><a href="#dashboard-karyawan" class="active"><span class="icon icon-dashboard"></span> Dashboard</a></li>
+            <li><a href="#presensi-masuk"><span class="icon icon-clock-in"></span> Presensi Masuk</a></li>
+            <li><a href="#presensi-pulang"><span class="icon icon-clock-out"></span> Presensi Pulang</a></li>
+            <li><a href="#riwayat-absensi"><span class="icon icon-history"></span> Riwayat Absensi</a></li>
+            <li><a href="#slip-gaji-saya"><span class="icon icon-payslip"></span> Slip Gaji Saya</a></li>
+            <li><a href="#profil-karyawan"><span class="icon icon-profile"></span> Profil Saya</a></li>
+        </ul>
+    </aside>
+
+    <!-- Wrapper untuk Navbar dan Konten Utama -->
+    <div class="main-content-wrapper">
+        <!-- Navbar -->
+        <header class="navbar">
+            <div class="logo">PayrollApp</div>
+            <div class="user-info">
+                <span id="userName">Selamat Datang, [Nama Pengguna]!</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <!-- Area Konten Utama -->
+        <main class="main-content" id="pageContent">
+            <h1>Selamat Datang di Dashboard!</h1>
+            <div class="card">
+                <h2>Ringkasan Cepat</h2>
+                <p>Ini adalah area di mana konten utama dari setiap halaman akan ditampilkan. Misalnya, jika Anda mengklik "Kelola Karyawan", tabel karyawan akan muncul di sini.</p>
+            </div>
+            <!-- Contoh Konten Spesifik Halaman (akan di-load di sini) -->
+        </main>
+    </div>
+
+    <script>
+        // Contoh sederhana untuk mengganti sidebar dan nama pengguna
+        // Dalam aplikasi nyata, ini akan dikontrol oleh data sesi dari backend (Laravel)
+
+        // Misalkan peran pengguna adalah 'admin'
+        const userRole = 'admin'; // Ubah ini menjadi 'karyawan' untuk melihat sidebar karyawan
+        const userName = (userRole === 'admin') ? 'Admin Ganteng' : 'Budi Karyawan';
+
+        document.getElementById('userName').textContent = `Selamat Datang, ${userName}!`;
+
+        if (userRole === 'admin') {
+            document.getElementById('adminSidebar').style.display = 'block';
+            document.getElementById('karyawanSidebar').style.display = 'none';
+        } else if (userRole === 'karyawan') {
+            document.getElementById('adminSidebar').style.display = 'none';
+            document.getElementById('karyawanSidebar').style.display = 'block';
+        } else {
+            // Jika tidak ada peran atau peran tidak dikenal, sembunyikan kedua sidebar
+            document.getElementById('adminSidebar').style.display = 'none';
+            document.getElementById('karyawanSidebar').style.display = 'none';
+             // Mungkin redirect ke halaman login
+        }
+
+        // Logika untuk menangani klik link sidebar dan memuat konten
+        // (Ini hanya placeholder, Anda akan menggunakan routing Laravel atau AJAX)
+        document.querySelectorAll('.sidebar ul li a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Mencegah navigasi default
+
+                // Hapus kelas 'active' dari semua link
+                document.querySelectorAll('.sidebar ul li a').forEach(l => l.classList.remove('active'));
+                // Tambah kelas 'active' ke link yang diklik
+                this.classList.add('active');
+
+                const pageTitle = this.textContent.trim();
+                const pageContentArea = document.getElementById('pageContent');
+
+                // Simulasi memuat konten halaman
+                pageContentArea.innerHTML = `
+                    <h1>${pageTitle}</h1>
+                    <div class="card">
+                        <p>Konten untuk halaman ${pageTitle} akan ditampilkan di sini.</p>
+                        ${pageTitle === 'Kelola Karyawan' ? '<p>Misalnya: tabel daftar karyawan, tombol tambah, edit, hapus.</p>' : ''}
+                        ${pageTitle === 'Presensi Masuk' ? '<p>Misalnya: tombol untuk melakukan presensi masuk.</p>' : ''}
+                    </div>
+                `;
+                console.log(`Navigasi ke: ${this.getAttribute('href')}`);
+            });
+        });
+
+        // Set link pertama sebagai aktif saat halaman dimuat (sesuai sidebar yang tampil)
+        const activeSidebar = userRole === 'admin' ? document.getElementById('adminSidebar') : document.getElementById('karyawanSidebar');
+        if (activeSidebar && activeSidebar.style.display !== 'none') {
+            const firstLink = activeSidebar.querySelector('ul li a');
+            if (firstLink) {
+                firstLink.click(); // Memicu event klik untuk memuat konten default dan menandai aktif
+            }
+        }
+
+    </script>
+</body>
+</html>

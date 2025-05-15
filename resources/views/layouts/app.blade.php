@@ -22,108 +22,388 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
+            overflow-x: hidden;
         }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Auth Pages (Login, Register) */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sidebar Styles - UPDATED WIDTH */
         .sidebar {
-            min-height: calc(100vh - 56px);
-            background-color: #343a40;
+            width: 200px; /* Reduced from 250px */
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
         }
-        .sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.75);
-            padding: 0.75rem 1rem;
-            border-radius: 0.25rem;
-            margin-bottom: 0.25rem;
+
+        .sidebar-header {
+            padding: 15px 10px; /* Reduced horizontal padding */
+            text-align: center;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 10px;
         }
-        .sidebar .nav-link:hover {
-            color: rgba(255, 255, 255, 0.95);
-            background-color: rgba(255, 255, 255, 0.1);
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.1em; /* Slightly smaller font */
         }
-        .sidebar .nav-link.active {
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.2);
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px; /* Reduced padding */
+            color: #ecf0f1;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem; /* Slightly smaller font */
         }
-        .sidebar .nav-link i {
-            margin-right: 0.5rem;
+
+        .sidebar ul li a .icon {
+            margin-right: 8px; /* Reduced margin */
+            width: 18px; /* Smaller icon width */
+            text-align: center;
         }
-        .content {
-            padding: 1.5rem;
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #3498db;
+            color: #ffffff;
+            padding-left: 20px; /* Reduced indent on hover */
         }
+
+        /* Main Content Area - UPDATED MARGIN */
+        .main-content-wrapper {
+            flex: 1;
+            margin-left: 200px; /* Reduced from 250px to match sidebar width */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Full width for auth pages */
+        .main-content-wrapper.full-width {
+            margin-left: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #ffffff;
+            color: #333;
+            padding: 15px 20px; /* Reduced horizontal padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .navbar .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .user-info span {
+            margin-right: 15px;
+        }
+
+        .navbar .user-info .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .navbar .user-info .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .navbar .user-info .logout-btn a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f7f6;
+            overflow-y: auto;
+        }
+
+        .main-content h1 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        /* Card Styles */
         .card {
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            margin-bottom: 20px;
         }
-        .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
+
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.25rem;
         }
-        .btn-success {
-            background-color: #198754;
-            border-color: #198754;
+
+        /* Mobile Toggle Button */
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            cursor: pointer;
+            padding: 0;
+            margin-right: 15px;
         }
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
+
+        /* Icon Placeholders */
+        .icon-dashboard::before { content: "🏠"; }
+        .icon-users::before { content: "👥"; }
+        .icon-attendance::before { content: "📅"; }
+        .icon-payroll::before { content: "💰"; }
+        .icon-payslip::before { content: "📄"; }
+        .icon-profile::before { content: "👤"; }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -200px; /* Updated to match new width */
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .main-content-wrapper {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .navbar {
+                padding: 15px;
+            }
+
+            .navbar .user-info span {
+                display: none;
+            }
+        }
+
+        /* Overlay for mobile when sidebar is open */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-overlay.active {
+                display: block;
+            }
         }
     </style>
     @stack('styles')
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Payroll Service') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    @php
+        $isAuthPage = request()->is('login') || request()->is('register') || request()->is('password/*');
+    @endphp
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+    @if($isAuthPage)
+        <!-- Auth Layout (Login, Register, etc.) -->
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-logo">FlexiPay</div>
+                    <p class="text-muted">Sistem Penggajian Karyawan</p>
                 </div>
-            </div>
-        </nav>
+                
+                <!-- Alert Messages -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle me-1"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-        <main>
-            @yield('content')
-        </main>
-    </div>
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-1"></i> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                @yield('content')
+            </div>
+        </div>
+    @else
+        <!-- Main Application Layout -->
+        <div class="app-container">
+            <!-- Sidebar Overlay (Mobile Only) -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+            <!-- Include Sidebar -->
+            @include('layouts.nav')
+
+            <!-- Main Content Wrapper -->
+            <div class="main-content-wrapper" id="mainContent">
+                <!-- Navbar -->
+                <header class="navbar">
+                    <div class="d-flex align-items-center">
+                        <button class="sidebar-toggle" id="sidebarToggle">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <div class="logo">FlexiPay</div>
+                    </div>
+                    <div class="user-info">
+                        <span id="userName">Selamat Datang, {{ Auth::user()->name ?? 'Admin User' }}!</span>
+                        <button class="logout-btn">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                        </button>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </header>
+
+                <!-- Main Content Area -->
+                <main class="main-content" id="pageContent">
+                    <!-- Alert Messages -->
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-1"></i> {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle me-1"></i> {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    
+                    @yield('content')
+                </main>
+            </div>
+        </div>
+    @endif
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // Auto-hide alerts after 5 seconds
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 5000);
+            
+            // Sidebar toggle functionality
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('adminSidebar') || document.getElementById('employeeSidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    sidebarOverlay.classList.toggle('active');
+                });
+            }
+            
+            // Close sidebar when clicking on overlay
+            if (sidebarOverlay && sidebar) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+            
+            // Close sidebar when window is resized to desktop size
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && sidebar) {
+                    sidebar.classList.remove('active');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

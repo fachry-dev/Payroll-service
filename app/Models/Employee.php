@@ -12,27 +12,31 @@ class Employee extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
         'user_id',
         'position',
-        'base_salary',
-        'absence_deduction',
-        'phone_number',
-        'address',
+        'department',
         'join_date',
+        'salary',
+        'bank_account',
+        'bank_name',
+        'tax_id',
+        'address',
+        'phone',
+        'emergency_contact',
+        'emergency_phone',
     ];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
         'join_date' => 'date',
-        'base_salary' => 'decimal:2',
-        'absence_deduction' => 'decimal:2',
+        'salary' => 'decimal:2',
     ];
 
     /**

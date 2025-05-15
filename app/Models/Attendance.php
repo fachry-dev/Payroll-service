@@ -12,7 +12,7 @@ class Attendance extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
         'employee_id',
@@ -26,16 +26,14 @@ class Attendance extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
         'date' => 'date',
-        'clock_in' => 'datetime',
-        'clock_out' => 'datetime',
     ];
 
     /**
-     * Get the employee that owns the attendance.
+     * Get the employee that owns the attendance record.
      */
     public function employee()
     {

@@ -1,62 +1,70 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\EmployeeController;
-use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
-use App\Http\Controllers\Admin\PayrollController;
-use App\Http\Controllers\Employee\DashboardController as EmployeeDashboardController;
-use App\Http\Controllers\Employee\AttendanceController as EmployeeAttendanceController;
+namespace App\Http;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-// Public routes
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+class Kernel extends HttpKernel
+{
+    /**
+     * The application's global HTTP middleware stack.
+     *
+     * These middleware are run during every request to your application.
+     *
+     * @var array<int, class-string|string>
+     */
+    protected $middleware = [
+        // \App\Http\Middleware\TrustHosts::class,
+        \App\Http\Middleware\TrustProxies::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
+        \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \App\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+    ];
 
-// Authentication routes
-Auth::routes(['register' => false]); // Disable registration
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array<string, array<int, class-string|string>>
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
 
-// Admin routes
-Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    
-    // Employee management
-    Route::resource('employees', EmployeeController::class);
-    
-    // Attendance management
-    Route::resource('attendances', AdminAttendanceController::class);
-    Route::get('/attendance-report', [AdminAttendanceController::class, 'report'])->name('attendances.report');
-    
-    // Payroll management
-    Route::resource('payrolls', PayrollController::class)->except(['edit', 'update', 'destroy']);
-    Route::post('/payrolls/{payroll}/mark-as-paid', [PayrollController::class, 'markAsPaid'])->name('payrolls.mark-as-paid');
-    Route::get('/payrolls/{payroll}/payslip', [PayrollController::class, 'generatePayslip'])->name('payrolls.payslip');
-    Route::post('/payrolls/generate-bulk', [PayrollController::class, 'generateBulk'])->name('payrolls.generate-bulk');
-});
+        'api' => [
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+    ];
 
-// Employee routes
-Route::prefix('employee')->middleware(['auth', 'employee'])->name('employee.')->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
-    
-    // Attendance
-    Route::get('/attendances', [EmployeeAttendanceController::class, 'index'])->name('attendances.index');
-    Route::post('/clock-in', [EmployeeAttendanceController::class, 'clockIn'])->name('clock-in');
-    Route::post('/clock-out', [EmployeeAttendanceController::class, 'clockOut'])->name('clock-out');
-    
-    // Payroll
-    Route::get('/payrolls', [EmployeeDashboardController::class, 'payrolls'])->name('payrolls');
-});
+    /**
+     * The application's middleware aliases.
+     *
+     * Aliases may be used instead of class names to conveniently assign middleware to routes and groups.
+     *
+     * @var array<string, class-string|string>
+     */
+    protected $middlewareAliases = [
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
+        'signed' => \App\Http\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'karyawan' => \App\Http\Middleware\EmployeeMiddleware::class,   
+    ];
+}
